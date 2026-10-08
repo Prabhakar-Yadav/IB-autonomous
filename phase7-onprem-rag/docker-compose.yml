@@ -1,0 +1,21 @@
+# On-prem vector store for confidential company documents (ZT-DATA).
+# Runs entirely on the lead's GPU box. Nothing here talks to any external service.
+name: zt-rag
+
+services:
+  zt-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: zt-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: zt_rag
+      POSTGRES_USER: zt
+      POSTGRES_PASSWORD: ${ZT_PG_PASSWORD:-zt-local-only}
+    ports:
+      - "127.0.0.1:5434:5432"      # localhost only — never exposed off the box
+    volumes:
+      - zt_pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  zt_pgdata:

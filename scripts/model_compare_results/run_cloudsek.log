@@ -1,0 +1,309 @@
+===== NEW COMPANY TEST: CloudSEK (cloudsek) — Fri Aug 14 16:42:15 UTC 2026 =====
+=== STAGE 0: collect (website + news + registry + linkedin + patents) ===
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-platform-worker-run-ec74790f87aa Creating 
+ Container nemoclaw-platform-worker-run-ec74790f87aa Created 
+  + stored webpage: https://cloudsek.com
+  + stored blog: https://cloudsek.com/blog
+  + stored webpage: https://cloudsek.com/customers
+  + stored webpage: https://cloudsek.com/about-us
+  + stored webpage: https://cloudsek.com/compliance
+  + stored blog: https://cloudsek.com/blog/txtbook-a-supply-chain-heist-rehearsed-in-public
+  + stored blog: https://cloudsek.com/blog/ai-supply-chain-breach-2500-companies-434000-cicd-pipelines
+  + stored blog: https://cloudsek.com/blog/access-for-sale-inside-a-russian-speaking-access-brokers-dual-operation
+  + stored webpage: https://cloudsek.com/ancmt/cloudsek-and-tech-mahindra-announce-partnership-to-enable-predictive-regulation-ready-cybersecurity-at-scale
+  + stored press_release: https://cloudsek.com/press
+  + stored webpage: https://cloudsek.com/security/vulnerability-disclosure
+  + stored webpage: https://cloudsek.com/?r=0
+  + stored webpage: https://cloudsek.com/nexus
+  + stored webpage: https://cloudsek.com/xvigil
+  + stored webpage: https://cloudsek.com/bevigil-enterprise
+run complete: {'fetched': 15, 'stored': 15, 'skipped_unchanged': 0, 'failed': 0}
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-platform-news-worker-run-28be9be4fda8 Creating 
+ Container nemoclaw-platform-news-worker-run-28be9be4fda8 Created 
+  + stored news: CloudSEK Becomes First Indian-Origin Cybersecurity Company t
+  + stored news: CloudSEK Identifies More than 2,500 Organisations Potentiall
+  + stored news: Commvault and CloudSEK Join Forces to Address a Growing and 
+  + stored news: CloudSEK Becomes First Indian-Origin Cybersecurity Company t
+  + stored news: CloudSEK Becomes 1st Indian-Origin Cybersecurity Firm To Sec
+  + stored news: Disney has high hopes for new 'Ferb' Christmas special
+  + stored news: Cybersecurity Startup CloudSEK Bags $19 Mn From MassMutual V
+  + stored news: Joyce V. - Talent Leader | Head of Talent Acquisition at Clo
+  + stored news: Partnership HealthPlan of California | Partnership HealthPla
+  + stored news: Largest AI Infrastructure Attack of 2026 Affects 2,500+ Comp
+  + stored news: Investigation Camp - The Power of Investigation
+  + stored news: PDF Ted Carter Jr. Investigation Report - compliance.osu.edu
+  + stored news: Rahul Sasi (Shashi) - Co Founder, CEO - CloudSEK - LinkedIn
+  + stored news: CloudSEK - 2026 Company Profile, Team, Funding, Competitors 
+  + stored news: CloudSEK — Funding, Revenue & Investors (2026) | Inc42
+  + stored news: PDF 2025 Annual Report
+  + stored news: Cloudsek Information Security Financials | Company Details
+  + stored news: CLOUDSEK INFORMATION SECURITY PRIVATE LIMITED - Company Prof
+  + stored news: CloudSEK Captable 2026 - Shareholders & Equity Distribution
+  + stored news: CloudSEK Research Number of Employees 2026 | Employee Count 
+run complete: {'searched': 8, 'fetched': 19, 'stored': 20, 'skipped_unchanged': 0, 'snippet_fallback': 1, 'failed': 0}
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-platform-news-worker-run-4f671456869a Creating 
+ Container nemoclaw-platform-news-worker-run-4f671456869a Created 
+  + stored 15 LinkedIn/hiring snippets
+run complete: {'searched': 3, 'snippets': 15, 'stored': 1, 'skipped_unchanged': 0, 'failed': 0}
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-minio Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-platform-news-worker-run-9816c14eaa86 Creating 
+ Container nemoclaw-platform-news-worker-run-9816c14eaa86 Created 
+run complete: {'searched': 5, 'fetched': 0, 'stored': 0, 'skipped_unchanged': 0, 'snippet_fallback': 0, 'failed': 0}
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-platform-news-worker-run-d3049b9172f7 Creating 
+ Container nemoclaw-platform-news-worker-run-d3049b9172f7 Created 
+  + stored patent search results (0 patents found)
+run complete: {'patents_found': 0, 'stored': 1, 'skipped_unchanged': 0, 'failed': 0}
+documents collected: 37
+=== STAGE 1: initial gap-fill (broaden coverage before first extraction) ===
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-platform-news-worker-run-45e0908c6ea0 Creating 
+ Container nemoclaw-platform-news-worker-run-45e0908c6ea0 Created 
+59 gap field(s) targeted for CloudSEK
+  + [Legal Entity Name] https://www.cloudsek.com/
+  + [Legal Entity Name] https://www.prnewswire.com/news-releases/cloudsek-identifies-more-than-2-500-organisations-potentially-impacted-by-ai-supply-chain-exposure-affecting-434-000-software-pipelines-302849949.html
+  + [Brand / Trading Name] https://www.cloudsek.com/openings
+  + [Date of Incorporation] https://inc42.com/company/cloudsek/
+  + [Date of Incorporation] https://finance.yahoo.com/news/cloudsek-becomes-first-indian-origin-150000387.html
+  + [Date of Incorporation] https://www.livemint.com/companies/news/cybersecurity-startup-cloudsek-raises-19-million-in-funding-11747741180603.html
+  + [Jurisdiction of Incorporation] https://www.livemint.com/companies/start-ups/bengalurubased-cloudsek-becomes-first-indian-cybersecurity-firm-to-get-investment-from-a-us-state-fund-11768307913022.html
+  + [Website] https://finance.yahoo.com/news/cloudsek-secures-19m-advance-ai-151146077.html
+  + [Sector / Sub-sector] https://www.thehindu.com/sci-tech/technology/cyber-attacks-on-indian-healthcare-industry-second-highest-in-the-world-cloudsek/article65914129.ece
+  + [Sector / Sub-sector] https://www.deccanherald.com/india/cyber-attacks-on-indian-healthcare-industry-second-highest-in-the-world-cloudsek-1146724.html
+  + [Company Stage] https://www.reuters.com/press-releases/cloudsek-strategic-investment-connecticut-innovations-job-creation-cybersecurity-research-2026-01-15/
+  + [Business Model] https://businessmodelcanvastemplate.com/products/cloudsek-business-model-canvas
+  + [Geographies Targeted Next 12–24 Months] https://www.zeebiz.com/small-business/news-cybersecurity-startup-cloudsek-raises-7-million-in-series-a-funding-to-accelerate-global-expansion-172725
+  + [Geographies Targeted Next 12–24 Months] https://www.vccircle.com/cybersecurity-startup-cloudsek-raises-7-mn-in-series-a-funding
+  + [Geographies Targeted Next 12–24 Months] https://www.ciol.com/funding-acquistion-merger/cloudsek-raises-19m-to-scale-predictive-cybersecurity-globally-9092723
+  + [Core Technology / Scientific Basis] https://support.microsoft.com/en-US/support/get-help/about-get-help
+  + [Core Technology / Scientific Basis] https://support.microsoft.com/ja-JP/support/get-help/about-get-help
+  + [Core Technology / Scientific Basis] https://support.microsoft.com/en-us/windows/windows-update-troubleshooter-19bc41ca-ad72-ae67-af3c-89ce169755dd
+  + [Third-party / Licensed-in Technology] https://yourstory.com/2025/05/cloudsek-raises-19-mn-led-by-mass-mutual
+  + [Third-party / Licensed-in Technology] https://redmondmag.com/blogs/redmond-dispatch/2026/03/commvault-partners-with-cloudsek.aspx
+  + [Barriers to Entry for New Competitors] https://www.investopedia.com/terms/n/narrow-moat.asp
+  + [Barriers to Entry for New Competitors] https://www.investopedia.com/ask/answers/05/economicmoat.asp
+run complete: {'queries': 59, 'fetched': 20, 'stored': 22, 'skipped_unchanged': 1, 'snippet_fallback': 3, 'failed': 0}
+=== STAGE 2: extract with Ultra-550B ===
+  drain 1: 59 queued 16:45:39
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-platform-worker-run-42d82655cf9b Creating 
+ Container nemoclaw-platform-worker-run-42d82655cf9b Created 
+processing 59 document(s) with model nvidia/nemotron-3-ultra-550b-a55b
+  [1/59] reading https://www.tofler.in/cloudsek-information-security-private-limited/co ...
+      chunk 1 → model...
+      chunk 2 → model...
+  ✓ https://www.tofler.in/cloudsek-information-security-private-limited/company/U72900KL2015PTC039177: {'authoritative': 13}
+  [2/59] reading https://cloudsek.com/blog ...
+      chunk 1 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://cloudsek.com/blog: {'authoritative': 8, 'displaced': 2}
+  [3/59] reading https://investor.accenture.com/~/media/Files/A/accenture-v4/investors/ ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+  ✓ https://investor.accenture.com/~/media/Files/A/accenture-v4/investors/home/annual-report-2025.pdf: no facts
+  [4/59] reading https://www.prnewswire.com/news-releases/cloudsek-identifies-more-than ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+  ✓ https://www.prnewswire.com/news-releases/cloudsek-identifies-more-than-2-500-organisations-potentially-impacted-by-ai-supply-chain-exposure-affecting-434-000-software-pipelines-302849949.html: {'unchanged': 2, 'dissent-filed': 7, 'verified': 1, 'written': 5}
+  [5/59] reading https://in.linkedin.com/in/joycevennila ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://in.linkedin.com/in/joycevennila: {'dissent-filed': 3, 'unchanged': 2, 'displaced': 1}
+  [6/59] reading https://tracxn.com/d/companies/cloudsek/__Db3ID9fFfpAkM7Emu_FS5Zhd-Wq3 ...
+      chunk 1 → model...
+  ✓ https://tracxn.com/d/companies/cloudsek/__Db3ID9fFfpAkM7Emu_FS5Zhd-Wq3ehEqc6aIyIwfrvs: {'unchanged': 1}
+  [7/59] reading https://www.linkedin.com/in/fb1h2s ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+    endpoint busy (all 2 key(s)) — waiting 20s…
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://www.linkedin.com/in/fb1h2s: {'authoritative': 1, 'dissent-filed': 4, 'unchanged': 1, 'displaced': 1, 'conflicted': 1}
+  [8/59] reading https://www.cloudsek.com/ ...
+      chunk 1 → model...
+      chunk 2 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+    endpoint busy (all 2 key(s)) — waiting 20s…
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://www.cloudsek.com/: {'unchanged': 2, 'dissent-filed': 5, 'displaced': 6, 'conflicted': 1}
+  [9/59] reading https://www.cloudsek.com/openings ...
+      chunk 1 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+    endpoint busy (all 2 key(s)) — waiting 20s…
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://www.cloudsek.com/openings: {'unchanged': 2, 'dissent-filed': 1, 'authoritative': 1, 'verified': 1, 'conflicted': 1}
+  [10/59] reading https://www.prnewswire.com/news-releases/cloudsek-identifies-more-than ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+  ✓ https://www.prnewswire.com/news-releases/cloudsek-identifies-more-than-2-500-organisations-potentially-impacted-by-ai-supply-chain-exposure-affecting-434-000-software-pipelines-302849949.html: {'unchanged': 3, 'dissent-filed': 8, 'written': 3}
+  [11/59] reading https://www.livemint.com/companies/news/cybersecurity-startup-cloudsek ...
+      chunk 1 → model...
+  ✓ https://www.livemint.com/companies/news/cybersecurity-startup-cloudsek-raises-19-million-in-funding-11747741180603.html: no facts
+  [12/59] reading search://linkedin-signals/cloudsek ...
+      chunk 1 → model...
+  ✓ search://linkedin-signals/cloudsek: {'unchanged': 1, 'dissent-filed': 9, 'written': 1}
+  [13/59] reading https://patents.google.com/?assignee=CloudSEK ...
+      chunk 1 → model...
+  ✓ https://patents.google.com/?assignee=CloudSEK: {'unchanged': 2, 'dissent-filed': 3}
+  [14/59] reading https://cloudsek.com/customers ...
+      chunk 1 → model...
+      chunk 2 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+    endpoint busy (all 2 key(s)) — waiting 20s…
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://cloudsek.com/customers: {'dissent-filed': 5, 'conflicted': 2, 'unchanged': 2}
+  [15/59] reading https://www.freepressjournal.in/tech/cloudsek-becomes-1st-indian-origi ...
+      chunk 1 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://www.freepressjournal.in/tech/cloudsek-becomes-1st-indian-origin-cybersecurity-firm-to-secure-10-million-from-us-state-backed-fund: {'dissent-filed': 15, 'unchanged': 2, 'written': 5, 'conflicted': 1}
+  [16/59] reading https://cloudsek.com/blog/ai-supply-chain-breach-2500-companies-434000 ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.112 {'entity': 0.112}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://cloudsek.com/blog/ai-supply-chain-breach-2500-companies-434000-cicd-pipelines: {'unchanged': 4, 'dissent-filed': 4, 'conflicted': 3, 'displaced': 1, 'authoritative': 1}
+  [17/59] reading https://www.deccanherald.com/india/cyber-attacks-on-indian-healthcare- ...
+      chunk 1 → model...
+  ✓ https://www.deccanherald.com/india/cyber-attacks-on-indian-healthcare-industry-second-highest-in-the-world-cloudsek-1146724.html: {'dissent-filed': 1}
+  [18/59] reading https://inc42.com/company/cloudsek/ ...
+      chunk 1 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://inc42.com/company/cloudsek/: {'dissent-filed': 14, 'unchanged': 1, 'authoritative': 1, 'displaced': 1}
+  [19/59] reading https://redmondmag.com/blogs/redmond-dispatch/2026/03/commvault-partne ...
+      chunk 1 → model...
+      chunk 2 → model...
+  ✓ https://redmondmag.com/blogs/redmond-dispatch/2026/03/commvault-partners-with-cloudsek.aspx: {'dissent-filed': 4, 'unchanged': 1}
+  [20/59] reading https://inc42.com/buzz/cybersecurity-startup-cloudsek-bags-19-mn-from- ...
+      chunk 1 → model...
+      chunk 2 → model...
+      chunk 3 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+  ✓ https://inc42.com/buzz/cybersecurity-startup-cloudsek-bags-19-mn-from-massmutual-ventures-others/: {'verified': 1, 'unchanged': 2, 'dissent-filed': 17, 'displaced': 2, 'authoritative': 5}
+  [21/59] reading https://cloudsek.com/ancmt/cloudsek-and-tech-mahindra-announce-partner ...
+      chunk 1 → model...
+      chunk 2 → model...
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+      verifier DIFFERENT score=0.111 {'entity': 0.111}
+

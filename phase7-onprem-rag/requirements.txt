@@ -1,0 +1,4 @@
+docling
+lancedb
+openai>=1.40
+requests

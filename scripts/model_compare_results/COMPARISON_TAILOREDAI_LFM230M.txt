@@ -1,0 +1,4 @@
+===== FINAL — Tailored AI (LFM2.5-230M) =====
+Documents collected: 48
+Fields filled: 0/103  (0.0%)
+Total time: 4 min

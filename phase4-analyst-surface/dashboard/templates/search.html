@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Search — PE Intelligence{% endblock %}
+{% block content %}
+<h1>Semantic search</h1>
+<p class="sub">Ask in plain language across every collected document — websites, news,
+filings, transcripts. Matches by meaning, not keywords.</p>
+
+<form method="get" action="/search" style="display:flex; gap:.6rem; margin-bottom:1.6rem;">
+  <input name="q" value="{{ q }}" placeholder='e.g. "regulatory investigations", "founder background", "who is raising money"'
+         style="flex:1; padding:.55rem .8rem; font:inherit; border:1px solid var(--rule); background:#fff;">
+  <button class="keep" type="submit">Search</button>
+</form>
+
+{% if error %}<div class="panel pad" style="color:var(--red)">{{ error }}</div>{% endif %}
+
+{% for r in results %}
+<div class="panel pad">
+  <div class="dim" style="margin-bottom:.25rem">
+    <a href="/company/{{ r.slug }}"><strong>{{ r.display_name }}</strong></a>
+    · {{ r.doc_type }} · relevance <span class="num">{{ '%.2f'|format(r.score) }}</span>
+  </div>
+  <div style="margin-bottom:.35rem">{{ r.chunk_text|truncate(420) }}</div>
+  <div class="src">{% if r.source_url and r.source_url.startswith('http') %}<a href="{{ r.source_url }}" target="_blank">{{ r.source_url|truncate(80) }}</a>{% else %}{{ r.source_url }}{% endif %}</div>
+</div>
+{% endfor %}
+{% if q and not results and not error %}
+<div class="panel pad">No matches. The semantic index may still be empty — run the embedder or wait for the next scheduler cycle.</div>
+{% endif %}
+{% endblock %}

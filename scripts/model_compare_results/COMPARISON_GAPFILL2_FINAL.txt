@@ -1,0 +1,4 @@
+===== GAP-FILL PASS #2 FINAL — Sequretek =====
+Fields filled (of 103 standard): 54  (52.4%)
+New fields discovered beyond the 103 schema: 0
+Pass time: 39 min

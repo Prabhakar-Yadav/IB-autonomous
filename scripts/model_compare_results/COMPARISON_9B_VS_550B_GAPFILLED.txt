@@ -1,0 +1,4 @@
+===== 9B vs 550B — FAIR GAP-FILL COMPARISON (Sequretek, same doc pool) =====
+Nemotron-3-Ultra-550B (2 gap-fill rounds) : 54/103 fields  (52.4%)
+nemotron-nano-9b-v2  (2 gap-fill rounds)  : 33/103 fields  (32.0%)
+Total time: 61 min

@@ -1,0 +1,4 @@
+===== TRUE FINAL COMPARISON — Sequretek (full 186 documents, both bugs fixed) =====
+Nemotron-3-Ultra-550B (hosted) : 42/103 fields  (40.8%)
+nemotron-nano-9b-v2 (hosted)   : 34/103 fields  (33.0%)
+Stage B finish time: 44 min

@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0.0",
+  "name": "master_company_schema",
+  "generated_from": "IB inputs required from nemoclaw.xlsx",
+  "description": "Canonical per-company intake schema for the AI-native IB platform. Every field value stored against this schema must carry the metadata envelope (source, confidence, collected_by, version). The LLM is never the source of truth; unknown stays unknown.",
+  "field_types": ["text", "date", "datetime", "url", "number", "percent", "money", "list", "boolean"],
+  "source_types": {
+    "web": "public internet (worker-collected or agent search)",
+    "document": "pitch deck, data room, filing, report provided to the firm",
+    "transcript": "founder/management call or meeting transcript",
+    "founder": "stated directly by the company, not independently verifiable",
+    "internal": "firm-internal process data (owners, next steps)"
+  },
+  "sections": [
+    {
+      "code": "A",
+      "id": "interaction_logistics",
+      "title": "Interaction Logistics",
+      "fields": [
+        { "id": "interaction_date_time", "label": "Date & Time", "type": "datetime", "sources": ["transcript", "internal"], "founder_only": false, "guidance": "When the interaction took place." },
+        { "id": "interaction_mode", "label": "Mode of Interaction", "type": "text", "sources": ["transcript", "internal"], "founder_only": false, "guidance": "Call / video / in-person / email." },
+        { "id": "interaction_duration", "label": "Duration", "type": "text", "sources": ["transcript", "internal"], "founder_only": false, "guidance": "Length of the interaction." }
+      ]
+    },
+    {
+      "code": "B",
+      "id": "company_snapshot",
+      "title": "Company Snapshot",
+      "fields": [
+        { "id": "legal_entity_name", "label": "Legal Entity Name", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "Registered legal name, not the brand." },
+        { "id": "brand_trading_name", "label": "Brand / Trading Name", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "" },
+        { "id": "date_of_incorporation", "label": "Date of Incorporation", "type": "date", "sources": ["web", "document"], "founder_only": false, "guidance": "" },
+        { "id": "jurisdiction_of_incorporation", "label": "Jurisdiction of Incorporation", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "Country/state of registration." },
+        { "id": "registered_operating_hq", "label": "Registered & Operating HQ", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "Both if they differ." },
+        { "id": "website", "label": "Website", "type": "url", "sources": ["web"], "founder_only": false, "guidance": "" },
+        { "id": "sector_subsector", "label": "Sector / Sub-sector", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "e.g. cybersecurity, AI infra, semiconductors, climate tech." },
+        { "id": "company_stage", "label": "Company Stage", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "Pre-seed / seed / Series A-… / growth / pre-IPO." },
+        { "id": "one_line_description", "label": "One-line Description (Elevator Pitch)", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "mission_problem", "label": "Mission / Problem Being Solved", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" }
+      ]
+    },
+    {
+      "code": "C",
+      "id": "business_product",
+      "title": "Business & Product Overview",
+      "fields": [
+        { "id": "core_products_services", "label": "Core Product(s) / Service(s)", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "business_model", "label": "Business Model", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "SaaS, licensing, marketplace, hardware, usage-based, hybrid." },
+        { "id": "target_customer_segments", "label": "Target Customer Segment(s)", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "SMB / mid-market / enterprise / govt / consumer." },
+        { "id": "geographies_served_today", "label": "Geographies Served Today", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "geographies_targeted_next_12_24m", "label": "Geographies Targeted Next 12–24 Months", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "product_roadmap_next_12m", "label": "Product Roadmap — Next 12 Months", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "key_differentiators", "label": "Key Differentiators vs. Alternatives", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "business_model_pivots", "label": "Any Pivots in Business Model to Date", "type": "text", "sources": ["transcript", "founder"], "founder_only": false, "guidance": "" }
+      ]
+    },
+    {
+      "code": "D",
+      "id": "technology_ip",
+      "title": "Technology & Intellectual Property (Deep Tech Focus)",
+      "section_guidance": "For deep tech companies (AI/ML, semiconductors, biotech, quantum, robotics, materials science) probe technical defensibility in depth.",
+      "fields": [
+        { "id": "core_technology_basis", "label": "Core Technology / Scientific Basis", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "technology_readiness_level", "label": "Technology Readiness Level (TRL)", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "Lab / prototype / pilot / commercial scale." },
+        { "id": "patents", "label": "Patents Filed / Granted", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "Jurisdictions, application numbers, status." },
+        { "id": "trade_secrets_datasets", "label": "Trade Secrets / Proprietary Datasets", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "open_source_dependencies", "label": "Open-source Dependencies / Licensing Exposure", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "third_party_licensed_tech", "label": "Third-party / Licensed-in Technology", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "rd_team_size_structure", "label": "R&D Team Size & Structure", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "key_technical_risks", "label": "Key Technical Risks / Unresolved Challenges", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "regulatory_approvals_needed", "label": "Regulatory Approvals Needed", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "e.g. FDA, CE, telecom, spectrum." },
+        { "id": "manufacturing_supply_chain", "label": "Manufacturing / Supply Chain Dependencies", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "If hardware." }
+      ]
+    },
+    {
+      "code": "E",
+      "id": "market_competition",
+      "title": "Market & Competitive Landscape",
+      "fields": [
+        { "id": "tam_sam_som", "label": "TAM / SAM / SOM", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "Company's own estimates; label them as such." },
+        { "id": "market_sizing_basis", "label": "Source / Basis for Market Sizing", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "direct_competitors", "label": "Key Direct Competitors", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "" },
+        { "id": "indirect_competitors_substitutes", "label": "Key Indirect Competitors / Substitutes", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "" },
+        { "id": "competitive_moat", "label": "Competitive Positioning / Moat", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "market_tailwinds_headwinds", "label": "Market Tailwinds / Headwinds", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "" },
+        { "id": "barriers_to_entry", "label": "Barriers to Entry for New Competitors", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "" }
+      ]
+    },
+    {
+      "code": "F",
+      "id": "financials",
+      "title": "Financial Overview",
+      "section_guidance": "Request last 3 years actuals + current year forecast, ideally via data room; capture headline figures here. NEVER estimated or web-guessed — document/transcript/founder sources only.",
+      "fields": [
+        { "id": "revenue_last_3fy", "label": "Revenue — Last 3 FY (actuals)", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "Per-year figures with currency." },
+        { "id": "revenue_current_fy_forecast", "label": "Revenue — Current Year Forecast", "type": "money", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "arr_mrr", "label": "ARR / MRR (if SaaS)", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "Include the definition used by the company." },
+        { "id": "revenue_growth_yoy", "label": "Revenue Growth Rate (YoY)", "type": "percent", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "gross_margin", "label": "Gross Margin", "type": "percent", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "ebitda_operating_margin", "label": "EBITDA / Operating Margin", "type": "percent", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "net_burn_monthly", "label": "Net Burn (Monthly)", "type": "money", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "cash_balance_runway", "label": "Cash Balance & Runway", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "As of latest month-end." },
+        { "id": "key_cost_line_items", "label": "Key Cost Line Items", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "Payroll, cloud/infra, S&M, R&D." },
+        { "id": "audited_financials", "label": "Audited Financials Available?", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "Auditor name, last audit date." },
+        { "id": "accounting_standard", "label": "Accounting Standard Used", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "Ind AS / IFRS / US GAAP." },
+        { "id": "outstanding_debt_convertibles", "label": "Outstanding Debt / Convertible Instruments", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "related_party_transactions", "label": "Related-party Transactions", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "" }
+      ]
+    },
+    {
+      "code": "G",
+      "id": "cap_table_fundraising_history",
+      "title": "Cap Table & Fundraising History",
+      "fields": [
+        { "id": "cap_table_summary", "label": "Current Cap Table Summary", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "Founders / ESOP pool / investors, % holding." },
+        { "id": "total_equity_raised", "label": "Total Equity Raised to Date", "type": "money", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "Often public via funding announcements." },
+        { "id": "prior_funding_rounds", "label": "Prior Funding Rounds", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "Round, date, amount, lead investor, valuation." },
+        { "id": "current_investors_board", "label": "Current Investors on Board", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "Name, board seat / observer rights." },
+        { "id": "esop_pool_vesting", "label": "ESOP Pool Size & Vesting Terms", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "down_rounds_bridges", "label": "Any Down Rounds / Bridge Financings", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "existing_investor_rights", "label": "Existing Investor Rights", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "Liquidation pref, anti-dilution, pro-rata, veto rights." }
+      ]
+    },
+    {
+      "code": "H",
+      "id": "current_raise",
+      "title": "Current Fundraising Requirement",
+      "fields": [
+        { "id": "amount_being_raised", "label": "Amount Being Raised", "type": "money", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "instrument_sought", "label": "Instrument Sought", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "Equity / convertible / SAFE / debt." },
+        { "id": "target_valuation", "label": "Target Pre-money / Post-money Valuation", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "valuation_basis", "label": "Valuation Basis / Benchmark Cited", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "use_of_funds", "label": "Use of Funds", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": true, "guidance": "% breakdown — product, hiring, GTM, capex, working capital." },
+        { "id": "target_close_timeline", "label": "Target Close Timeline", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "investor_type_sought", "label": "Investor Type Sought", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "term_sheets_lois_in_hand", "label": "Any Existing Term Sheets / LOIs in Hand", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "governance_changes_open_to", "label": "Board / Governance Changes Founder Is Open To", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "founder_flexibility_terms", "label": "Founder's Flexibility on Valuation / Terms", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" }
+      ]
+    },
+    {
+      "code": "I",
+      "id": "team_organisation",
+      "title": "Team & Organisation",
+      "fields": [
+        { "id": "founders_background_holding", "label": "Founder(s) — Name, Background, % Holding", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "% holding usually founder-provided; background is public." },
+        { "id": "key_management_team", "label": "Key Management Team", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "CXOs, relevant experience." },
+        { "id": "total_headcount_split", "label": "Total Headcount (and split by function)", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "LinkedIn gives an approximation; founder gives exact." },
+        { "id": "hiring_plan_next_12m", "label": "Hiring Plan (Next 12 Months)", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "advisory_board_directors", "label": "Advisory Board / Board of Directors", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "" },
+        { "id": "key_person_dependency", "label": "Key-person Dependency Risk", "type": "text", "sources": ["document", "transcript"], "founder_only": false, "guidance": "" },
+        { "id": "founder_vesting_lockin", "label": "Founder Vesting / Lock-in Terms", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" }
+      ]
+    },
+    {
+      "code": "J",
+      "id": "traction_metrics",
+      "title": "Traction & Key Metrics",
+      "fields": [
+        { "id": "total_customers_users", "label": "Total Customers / Users (Paying vs. Free)", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "Public claims vs. founder-stated exact numbers — record which." },
+        { "id": "logo_highlights", "label": "Logo Highlights", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "Notable customers; willing to be referenceable?" },
+        { "id": "nrr_gross_retention", "label": "Net Revenue Retention (NRR) / Gross Retention", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "cac", "label": "Customer Acquisition Cost (CAC)", "type": "money", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "ltv_ltv_cac", "label": "Lifetime Value (LTV) / LTV:CAC", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "churn_rate", "label": "Churn Rate (Logo & Revenue)", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "sales_cycle_length", "label": "Sales Cycle Length", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "pipeline_bookings_current_q", "label": "Pipeline / Bookings (Current Quarter)", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "product_usage_metrics", "label": "Product Usage / Engagement Metrics", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "DAU/MAU, activation, adoption, as relevant." },
+        { "id": "awards_certifications", "label": "Awards, Certifications, Analyst Recognition", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "SOC2, ISO27001, Gartner, etc." }
+      ]
+    },
+    {
+      "code": "K",
+      "id": "legal_regulatory_compliance",
+      "title": "Legal, Regulatory & Compliance",
+      "fields": [
+        { "id": "corporate_structure", "label": "Corporate Structure Chart", "type": "text", "sources": ["document", "founder"], "founder_only": false, "guidance": "Holding co., subsidiaries, JVs." },
+        { "id": "litigation", "label": "Pending / Past Litigation", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "Court records and news are public; founder disclosure fills gaps." },
+        { "id": "regulatory_licenses", "label": "Regulatory Licenses Held / Required", "type": "text", "sources": ["web", "document", "founder"], "founder_only": false, "guidance": "" },
+        { "id": "data_privacy_compliance", "label": "Data Privacy & Security Compliance", "type": "text", "sources": ["web", "document"], "founder_only": false, "guidance": "GDPR, DPDP Act, HIPAA, etc." },
+        { "id": "export_control_sanctions", "label": "Export Control / Sanctions Exposure", "type": "text", "sources": ["web", "document", "transcript"], "founder_only": false, "guidance": "Esp. for deep tech / dual-use technology." },
+        { "id": "material_contracts", "label": "Material Contracts", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "Key customer/supplier contracts, exclusivity clauses." },
+        { "id": "insurance_coverage", "label": "Insurance Coverage", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "known_red_flags", "label": "Any Known Deal-breakers / Red Flags Disclosed", "type": "text", "sources": ["transcript", "founder"], "founder_only": true, "guidance": "" }
+      ]
+    },
+    {
+      "code": "L",
+      "id": "customer_revenue_concentration",
+      "title": "Customer & Revenue Concentration",
+      "fields": [
+        { "id": "top5_customer_concentration", "label": "Top 5 Customers as % of Revenue", "type": "percent", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "avg_contract_value_length", "label": "Average Contract Value / Length", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "revenue_by_geography", "label": "Revenue by Geography (%)", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "revenue_by_product_line", "label": "Revenue by Product Line (%)", "type": "text", "sources": ["document", "founder"], "founder_only": true, "guidance": "" },
+        { "id": "channel_mix", "label": "Channel Mix", "type": "text", "sources": ["document", "transcript", "founder"], "founder_only": false, "guidance": "Direct sales, partnerships, resellers, self-serve." }
+      ]
+    },
+    {
+      "code": "N",
+      "id": "follow_up_next_steps",
+      "title": "Follow-up Actions & Next Steps",
+      "fields": [
+        { "id": "documents_requested", "label": "Documents Requested from Company", "type": "text", "sources": ["internal"], "founder_only": false, "guidance": "Deck, financials, cap table, data room access." },
+        { "id": "documents_owed_back", "label": "Documents/Info Owed Back to Company", "type": "text", "sources": ["internal"], "founder_only": false, "guidance": "" },
+        { "id": "next_meeting", "label": "Next Call / Meeting Scheduled", "type": "text", "sources": ["internal"], "founder_only": false, "guidance": "Date, attendees, agenda." },
+        { "id": "internal_owner", "label": "Internal Owner for This Account", "type": "text", "sources": ["internal"], "founder_only": false, "guidance": "" },
+        { "id": "mandate_decision_target_date", "label": "Target Date for Mandate Decision", "type": "date", "sources": ["internal"], "founder_only": false, "guidance": "" }
+      ]
+    }
+  ]
+}

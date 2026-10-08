@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Native Investment Banking Platform</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #2563eb;
+            --secondary-hover: #1d4ed8;
+            --accent: #10b981;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #334155;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        header p {
+            color: #cbd5e1;
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            animation: slideDown 1s ease-out;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(to right, #eff6ff, #ffffff);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .highlight-box:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Grid Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Interactive Pipeline */
+        .pipeline-container {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .pipeline-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .pipeline-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--border);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .step-btn {
+            position: relative;
+            z-index: 2;
+            background: var(--surface);
+            border: 3px solid var(--border);
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .step-btn.active, .step-btn:hover {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step-label {
+            position: absolute;
+            top: 70px;
+            text-align: center;
+            width: 100px;
+            left: -20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pipeline-content {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            min-height: 120px;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: var(--surface);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: #f1f5f9;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            padding: 0 1.5rem;
+            opacity: 0;
+            transition: all 0.4s ease-out;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* arbitrary large height */
+            padding: 1.5rem;
+            opacity: 1;
+            border-top: 1px solid var(--border);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .badge-done { background-color: #d1fae5; color: #065f46; }
+        .badge-wip { background-color: #fef3c7; color: #92400e; }
+        
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .pipeline-steps { display: none; } /* Simplified view for mobile */
+            .pipeline-container::before { content: 'Tap below to read steps:'; font-weight: bold; color: var(--secondary);}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#vision">1. The Vision</a>
+        <a href="#engine">2. The Engine</a>
+        <a href="#progress">3. Progress & Roadmap</a>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>AI-Native Investment Banking Platform</h1>
+        <p>The Firm's Automated Institutional Memory & Intelligence Engine</p>
+    </header>
+
+    <!-- Section 1: Vision -->
+    <section id="vision" class="container reveal">
+        <h2>What Are We Building?</h2>
+        <p>We are not building a simple chatbot that answers questions on demand. We are building a <strong>continuously updated enterprise intelligence platform</strong>.</p>
+        
+        <div class="highlight-box">
+            <strong>The Golden Rule:</strong> The AI (LLM) is <em>never</em> the source of truth. The database is. The AI simply acts as a smart parser that reads messy documents and turns them into organized data. It never guesses.
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>The Core Problem</h3>
+                <p>Traditionally, analysts spend countless hours hunting through news, filings, and websites to find data, updating spreadsheets manually. That knowledge is siloed, easily lost, and hard to verify.</p>
+            </div>
+            <div class="card">
+                <h3>The Solution</h3>
+                <p>Tireless AI "workers" scour the internet 24/7. They find raw documents, extract verifiable facts (revenue, leadership changes, new products), and save them to a central database with <strong>exact source receipts</strong>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Engine -->
+    <section id="engine" class="container reveal">
+        <h2>How The Engine Works</h2>
+        <p>Click the steps below to see how a piece of raw internet noise turns into a trusted investment metric.</p>
+
+        <div class="pipeline-container">
+            <div class="pipeline-steps" id="pipeline-steps">
+                <div class="step-btn active" onclick="updatePipeline(1)">1
+                    <span class="step-label">Collection</span>
+                </div>
+                <div class="step-btn" onclick="updatePipeline(2)">2
+                    <span class="step-label">Extraction</span>
+                </div>
+                <div class="step-btn" onclick="updatePipeline(3)">3
+                    <span class="step-label">Validation</span>
+                </div>
+                <div class="step-btn" onclick="updatePipeline(4)">4
+                    <span class="step-label">Interface</span>
+                </div>
+            </div>
+
+            <div class="pipeline-content" id="pipeline-content">
+                <h3 style="margin-top: 0;">1. Collection (The Workers)</h3>
+                <p>Independent "Worker" bots run constantly. They only collect; they do not analyze. They monitor:</p>
+                <ul>
+                    <li><strong>Company Websites:</strong> Detecting changes in products or pricing.</li>
+                    <li><strong>News & Press:</strong> Scanning Reuters, Bloomberg, and financial media.</li>
+                    <li><strong>Registries:</strong> Pulling corporate filings, incorporation dates, and capital.</li>
+                    <li><strong>Platforms:</strong> Checking GitHub activity and LinkedIn hiring trends.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Progress -->
+    <section id="progress" class="container reveal">
+        <h2>Progress & Roadmap</h2>
+        <p>The core infrastructure is fully functional. The system is actively crawling, reading, extracting, and verifying data autonomously. Click below to expand the details.</p>
+
+        <div class="accordion">
+            <!-- Item 1 -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>✅ Completed Phases (0-5)</span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>Foundation:</strong> Database, storage, and NVIDIA AI models are live. Master company schema (103 data points) is established.</li>
+                        <li><strong>The Workers:</strong> Automated schedulers are running 8 different data workers (Web, News, GitHub, LinkedIn, Registries, Patents, Gap-Fillers).</li>
+                        <li><strong>Analyst Tools:</strong> Telegram bot is live for Q&A and transcript uploads. Web Dashboard is built to review facts and company profiles.</li>
+                        <li><strong>Smart Search:</strong> Semantic search engine is live, allowing analysts to search through all collected documents instantly.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🚧 Key Breakthroughs <span class="badge badge-done">Resolved</span></span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>Public vs. Private Financials:</strong> Adapted the system to recognize that Indian company financials (Revenue, EBITDA) are publicly available via registries and news, unlocking massive data automation (up to ~60% fill rate).</li>
+                        <li><strong>Precision Extraction:</strong> Fixed AI tendencies to write conversational "stories". It now strictly outputs pure, formatted data points for the database.</li>
+                        <li><strong>Conflict Resolution:</strong> Built an automated "Judge" that ranks sources (e.g., an official transcript always overrides a blog post).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🚀 What's Next? (Phase 6) <span class="badge badge-wip">Up Next</span></span>
+                    <span class="accordion-icon">▼</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Now that we have a trusted, continuously updating database, we will build <strong>Analysis Agents</strong>. These agents will sit on top of the data and automatically generate:</p>
+                    <ul>
+                        <li>Valuation models (DCF / Comps)</li>
+                        <li>Competitive Intelligence reports</li>
+                        <li>Automated Investment Thesis drafts (bull/bear with linked evidence)</li>
+                        <li>Risk Summaries (litigation, concentration, leadership changes)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        // Data for Interactive Pipeline
+        const pipelineData = {
+            1: {
+                title: "1. Collection (The Workers)",
+                text: `<p>Independent "Worker" bots run constantly. They only collect; they do not analyze. They monitor:</p>
+                <ul>
+                    <li><strong>Company Websites:</strong> Detecting changes in products or pricing.</li>
+                    <li><strong>News & Press:</strong> Scanning Reuters, Bloomberg, and financial media.</li>
+                    <li><strong>Registries:</strong> Pulling corporate filings, incorporation dates, and capital.</li>
+                    <li><strong>Platforms:</strong> Checking GitHub activity and LinkedIn hiring trends.</li>
+                </ul>`
+            },
+            2: {
+                title: "2. Extraction (The Brain)",
+                text: `<p>The AI (NVIDIA Nemotron) reads the collected documents. It acts as an intelligent parser looking for specific, predefined data fields.</p>
+                <p>If it finds a fact, it saves it. If it doesn't, it leaves it blank. <em>It is strictly forbidden from summarizing or making assumptions.</em></p>`
+            },
+            3: {
+                title: "3. Cross-Validation (The Judge)",
+                text: `<p>If two news articles claim different revenue numbers, the system flags it as "conflicted".</p>
+                <p>A fact is only marked as "verified" if independent sources agree, or if a highly trusted source (like an official company transcript or government registry) provides it.</p>`
+            },
+            4: {
+                title: "4. The Interfaces (The Users)",
+                text: `<p>Once data is validated and stored, it powers everything else:</p>
+                <ul>
+                    <li><strong>Telegram Bot:</strong> Ask questions, upload transcripts, get instant updates.</li>
+                    <li><strong>Web Dashboard:</strong> Visual interface showing company completeness, fact receipts, and "ask the founder" gaps.</li>
+                    <li><strong>Smart Search:</strong> Plain-language search across all collected documents.</li>
+                </ul>`
+            }
+        };
+
+        // Update Pipeline Content
+        function updatePipeline(step) {
+            // Update buttons
+            const buttons = document.querySelectorAll('.step-btn');
+            buttons.forEach((btn, index) => {
+                if(index + 1 === step) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update content with fade effect
+            const contentDiv = document.getElementById('pipeline-content');
+            contentDiv.style.opacity = 0;
+            
+            setTimeout(() => {
+                contentDiv.innerHTML = `<h3 style="margin-top: 0;">${pipelineData[step].title}</h3>${pipelineData[step].text}`;
+                contentDiv.style.opacity = 1;
+                contentDiv.style.transition = "opacity 0.3s ease-in-out";
+            }, 150);
+        }
+
+        // Accordion Logic
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            
+            // Close other items (optional, remove if you want multiple open)
+            const allItems = document.querySelectorAll('.accordion-item');
+            allItems.forEach(i => {
+                if(i !== item) i.classList.remove('active');
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
+        }
+
+        // Scroll Reveal Animations
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
+</body>
+</html>

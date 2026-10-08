@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Review · {{ company.display_name }} — PE Intelligence{% endblock %}
+{% block content %}
+<h1>{{ company.display_name }} — needs review</h1>
+<p class="sub">Facts that are <b>not yet verified</b>. These are deliberately kept off the main
+profile so the profile only shows confirmed data.
+<a href="/company/{{ company.slug }}">← verified profile</a> ·
+<a href="/trace/{{ company.slug }}">extraction trace →</a></p>
+
+<div class="statrow">
+  <div class="stat crit"><div class="v num">{{ conflicted|length }}</div><div class="l">⚠ conflicted — sources disagree</div></div>
+  <div class="stat"><div class="v num">{{ unverified|length }}</div><div class="l">○ unverified — awaiting confirmation</div></div>
+</div>
+
+<h2>Conflicted — sources disagree</h2>
+{% if not conflicted %}<div class="panel pad dim">Nothing conflicted for this company.</div>{% endif %}
+{% for r in conflicted %}
+<div class="panel pad">
+  <div class="dim" style="margin-bottom:.3rem">{{ r.section_code }} · {{ r.section_title }} —
+    <strong style="color:var(--ink)">{{ r.label }}</strong></div>
+  <table>
+    <tr><th style="width:11%">Current</th><td>{{ r.value_text }}</td>
+        <td class="num" style="width:7%">{{ '%.2f'|format(r.confidence) }}</td>
+        <td class="src" style="width:28%">{% if r.source_url and r.source_url.startswith('http') %}<a href="{{ r.source_url }}" target="_blank">{{ r.source_url|truncate(50) }}</a>{% else %}{{ r.source_url }}{% endif %}</td></tr>
+    <tr><th>Previous</th><td class="dim">{{ r.prev_value or '— none (rejecting empties the field)' }}</td>
+        <td></td><td class="src">{{ (r.prev_source or '')|truncate(50) }}</td></tr>
+  </table>
+  <div style="margin-top:.6rem; display:flex; gap:.6rem;">
+    <form method="post" action="/conflicts/{{ r.id }}/keep"><button class="keep">✓ Keep current</button></form>
+    <form method="post" action="/conflicts/{{ r.id }}/reject"><button class="reject">✗ Reject</button></form>
+  </div>
+</div>
+{% endfor %}
+
+<h2>Unverified — single source, awaiting confirmation</h2>
+<div class="panel pad overflow">
+  {% if not unverified %}<span class="dim">Nothing unverified.</span>{% endif %}
+  {% if unverified %}
+  <table>
+    <tr><th style="width:22%">Field</th><th>Value</th><th style="width:7%">Conf.</th><th style="width:26%">Source</th></tr>
+    {% for r in unverified %}
+    <tr>
+      <td>{{ r.label }}{% if r.founder_only %} <span class="badge founder">founder-only</span>{% endif %}
+          <div class="dim" style="font-size:.75rem">{{ r.section_code }} · {{ r.section_title }}</div></td>
+      <td>{{ r.value_text|truncate(150) }}</td>
+      <td class="num">{{ '%.2f'|format(r.confidence) }}</td>
+      <td class="src">{% if r.source_url and r.source_url.startswith('http') %}<a href="{{ r.source_url }}" target="_blank">{{ r.source_url|truncate(46) }}</a>{% else %}{{ r.source_url or r.source_type }}{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Discovered fields — PE Intelligence{% endblock %}
+{% block content %}
+<h1>Discovered fields</h1>
+<p class="sub">Columns the <b>data itself</b> suggests we should track, beyond the 103-field
+intake form. Proposed by the analysis agent from collected evidence — each with a rationale
+and an observed example. Proposals appearing across several companies are the strongest
+candidates for adding to the schema.</p>
+
+{% if error %}<div class="panel pad" style="color:var(--red)">{{ error }}</div>{% endif %}
+{% if not rows and not error %}<div class="panel pad dim">No proposals yet — run the discovery agent.</div>{% endif %}
+
+{% if rows %}
+<div class="panel pad overflow">
+  <table>
+    <tr><th style="width:20%">Proposed field</th><th style="width:6%" class="num">Cos</th>
+        <th style="width:7%">Section</th><th>Why it matters</th>
+        <th style="width:22%">Example observed</th><th style="width:6%" class="num">Conf.</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td><b>{{ r.label }}</b><div class="src">{{ r.field_key }}</div></td>
+      <td class="num">{{ r.companies }}</td>
+      <td>{{ r.section_hint }}</td>
+      <td style="font-size:.86rem">{{ r.top_rationale }}</td>
+      <td class="dim" style="font-size:.82rem">{{ (r.example_value or '')|truncate(110) }}</td>
+      <td class="num">{{ '%.2f'|format(r.avg_confidence) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}

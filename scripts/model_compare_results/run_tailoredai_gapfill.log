@@ -1,0 +1,48 @@
+===== TAILORED AI GAP-FILL (Qwen3.5-27B) — Sat Aug 15 14:28:43 UTC 2026 =====
+empty fields remaining before gap-fill: 37
+ Container nemoclaw-minio Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-platform-news-worker-run-b351bd06462c Creating 
+ Container nemoclaw-platform-news-worker-run-b351bd06462c Created 
+8 gap field(s) targeted for Tailored AI
+  + [R&D Team Size & Structure] https://www.merriam-webster.com/dictionary/tailored
+  + [R&D Team Size & Structure] https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD-%E6%B1%89%E8%AF%AD-%E7%AE%80%E4%BD%93/tailored
+  + [Barriers to Entry for New Competitors] https://www.mercatus.org/research/working-papers/data-really-barrier-entry-rethinking-competition-regulation-generative-ai
+  + [Key-person Dependency Risk] https://www.sec.gov/Archives/edgar/data/2039384/000149315225007820/formf-1.htm
+run complete: {'queries': 8, 'fetched': 1, 'stored': 4, 'skipped_unchanged': 1, 'snippet_fallback': 4, 'failed': 0}
+  drain 1: 4 queued 14:29:10
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-platform-worker-run-ff8d5f5156c9 Creating 
+ Container nemoclaw-platform-worker-run-ff8d5f5156c9 Created 
+processing 4 document(s) with model qwen3.5:27b
+  [1/4] reading https://www.sec.gov/Archives/edgar/data/2039384/000149315225007820/for ...
+      chunk 1 → model...
+      verifier DIFFERENT score=0.116 {'entity': 0.116}
+      verifier DIFFERENT score=0.104 {'entity': 0.104}
+  ✓ https://www.sec.gov/Archives/edgar/data/2039384/000149315225007820/formf-1.htm: {'dissent-filed': 2}
+  [2/4] reading https://www.merriam-webster.com/dictionary/tailored ...
+      chunk 1 → model...
+  ✓ https://www.merriam-webster.com/dictionary/tailored: {'dissent-filed': 2}
+  [3/4] reading https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%A ...
+      chunk 1 → model...
+  ✓ https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD-%E6%B1%89%E8%AF%AD-%E7%AE%80%E4%BD%93/tailored: no facts
+  [4/4] reading https://www.mercatus.org/research/working-papers/data-really-barrier-e ...
+      chunk 1 → model...
+  ✓ https://www.mercatus.org/research/working-papers/data-really-barrier-entry-rethinking-competition-regulation-generative-ai: {'unchanged': 1}
+extraction pass complete
+===== TAILORED AI — GAP-FILLED FINAL (Qwen3.5-27B) =====
+Fields filled: 66/103  (64.1%)
+Pass time: 1 min

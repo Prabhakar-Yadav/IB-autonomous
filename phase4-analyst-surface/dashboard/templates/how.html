@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block title %}How it works — PE Intelligence{% endblock %}
+{% block content %}
+<style>
+  .flow{display:grid;gap:0;margin:1.2rem 0}
+  .stage{background:var(--panel);border:1px solid var(--hair);border-left:4px solid var(--navy);
+         border-radius:8px;padding:1rem 1.2rem}
+  .stage .step{font-family:Consolas,ui-monospace,monospace;font-size:.7rem;font-weight:700;
+         letter-spacing:.14em;color:var(--navy-bright);text-transform:uppercase}
+  .stage h3{font-size:1.05rem;margin:.15rem 0 .4rem;letter-spacing:-.01em}
+  .stage p{font-size:.9rem;color:var(--ink-2);margin:0 0 .3rem;max-width:72ch}
+  .connect{height:24px;width:4px;background:var(--hair);margin-left:1.4rem}
+  .connect::after{content:"▼";position:relative;left:-.42rem;top:7px;color:var(--hair);font-size:.7rem}
+  .tag{display:inline-block;font-family:Consolas,ui-monospace,monospace;font-size:.68rem;
+       background:var(--navy);color:#fff;border-radius:4px;padding:.05rem .45rem;margin-left:.4rem}
+  .wk{display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .8rem;align-items:baseline;
+      margin-top:.5rem;font-size:.86rem}
+  .wk .wn{font-weight:650;white-space:nowrap}
+  .wk .wd{color:var(--ink-2)}
+  .wk .wc{color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .trust{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.85rem}
+  .trust td{padding:.35rem .5rem;border-bottom:1px solid var(--hair2);vertical-align:top}
+  .trust tr:last-child td{border-bottom:none}
+  .trust .t{font-weight:650;white-space:nowrap}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.5rem}
+  @media(max-width:640px){.split{grid-template-columns:1fr}}
+  .lane{background:var(--paper);border:1px solid var(--hair);border-radius:7px;padding:.7rem .9rem}
+  .lane h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin:0 0 .35rem}
+  .lane ol{margin:0;padding-left:1.1rem;font-size:.85rem;color:var(--ink-2);display:grid;gap:.2rem}
+  .statline{display:flex;flex-wrap:wrap;gap:.6rem;margin:.4rem 0 1.2rem}
+  .kpi{background:var(--panel);border:1px solid var(--hair);border-radius:8px;padding:.5rem .9rem}
+  .kpi b{font-size:1.3rem;font-variant-numeric:tabular-nums}
+  .kpi span{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+</style>
+
+<h1>How the platform works</h1>
+<p class="sub">End-to-end pipeline: from adding a company to querying it on Telegram.
+Every step is logged.</p>
+
+<div class="statline">
+  <div class="kpi"><b>{{ comps }}</b><span>companies</span></div>
+  <div class="kpi"><b>{{ runs }}</b><span>worker runs</span></div>
+  <div class="kpi"><b>{{ docs }}</b><span>documents</span></div>
+  <div class="kpi"><b>{{ facts }}</b><span>current facts</span></div>
+  <div class="kpi"><b>{{ chunks }}</b><span>search chunks</span></div>
+</div>
+
+<div class="flow">
+
+  <div class="stage">
+    <div class="step">Step 1 · Trigger</div>
+    <h3>Add a company</h3>
+    <p>You add a company once. A scheduler then re-runs the full pipeline for it every 24
+    hours, automatically — no manual step after that.</p>
+  </div>
+  <div class="connect"></div>
+
+  <div class="stage">
+    <div class="step">Step 2 · Collect &nbsp;<span class="tag">collect only</span> <span class="tag">open-source search</span></div>
+    <h3>8 workers fetch data</h3>
+    <p>Each worker pulls from one source and saves the raw page. Workers don't parse anything —
+    they just download. They don't need to know the 103 fields; the extractor (next step)
+    reads every page against all fields.</p>
+    <p style="margin-top:.4rem"><b>Search runs on SearXNG</b>, a self-hosted open-source
+    metasearch engine (aggregates Google, Bing, DuckDuckGo, Startpage, Qwant). No API key,
+    no quota, no rate limits — it runs as a container in our own stack.</p>
+    <div class="wk">
+      <span class="wn">🌐 Company site</span><span class="wd">the company's own pages, PDFs, press</span><span class="wc">{{ workers|selectattr('collected_by','equalto','company-website-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">📰 News</span><span class="wd">funding, valuations, lawsuits, revenue in the press</span><span class="wc">{{ workers|selectattr('collected_by','equalto','news-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">🏛 Registry</span><span class="wd">MCA records — CIN, incorporation, directors</span><span class="wc">{{ workers|selectattr('collected_by','equalto','registry-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">⚗ Patents</span><span class="wd">Google Patents + Indian Patent Office</span><span class="wc">{{ workers|selectattr('collected_by','equalto','patents-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">💻 GitHub</span><span class="wd">public repos &amp; languages — the tech stack</span><span class="wc">{{ workers|selectattr('collected_by','equalto','github-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">👔 LinkedIn</span><span class="wd">headcount &amp; hiring from public search</span><span class="wc">{{ workers|selectattr('collected_by','equalto','linkedin-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">🎯 Gap-filler</span><span class="wd">hunts the fields still empty, one targeted search each</span><span class="wc">{{ workers|selectattr('collected_by','equalto','gap-filler-worker')|map(attribute='n')|sum }} docs</span>
+      <span class="wn">💬 Transcript</span><span class="wd">founder calls filed via Telegram (confidential data)</span><span class="wc">{{ workers|selectattr('collected_by','equalto','telegram-intake')|map(attribute='n')|sum }} docs</span>
+    </div>
+  </div>
+  <div class="connect"></div>
+
+  <div class="stage">
+    <div class="step">Step 3 · Extract &nbsp;<span class="tag">parse only</span></div>
+    <h3>Extract facts from each page</h3>
+    <p>The model reads each page against all 103 schema fields and returns only facts stated
+    in the text — each with a confidence score and the source quote. Fields not found in the
+    text stay empty.</p>
+  </div>
+  <div class="connect"></div>
+
+  <div class="stage">
+    <div class="step">Step 4 · Validate &nbsp;<span class="tag">LLM-as-a-Verifier + source tiers</span></div>
+    <h3>Mark each fact verified or not</h3>
+    <p>Better sources need fewer confirmations to be marked verified. When two sources
+    disagree, a verifier based on <a href="https://arxiv.org/abs/2607.05391" target="_blank">
+    arXiv:2607.05391 (Stanford / UC Berkeley)</a> scores the pair on four separate criteria —
+    <b>same entity · same period · same unit · same value</b> — using continuous confidence
+    scores read from the model's token probabilities, not a yes/no answer. The weakest
+    criterion caps agreement, so a mismatch on entity or period alone blocks a false merge.
+    Genuine conflicts go to manual review; nothing is guessed.</p>
+    <table class="trust">
+      <tr><td class="t">Tier&nbsp;1<br><span class="badge verified">1 source</span></td>
+          <td>Company's own website · MCA / MCA-CDM · data.gov.in · RBI · SEBI · GST portal ·
+              SEC EDGAR · UK Companies House · GLEIF (LEI) · NSE / BSE ·
+              USPTO · EPO · IP India · WIPO</td></tr>
+      <tr><td class="t">Tier&nbsp;2<br><span class="badge verified">1 source</span></td>
+          <td>Reuters · Bloomberg · FT · WSJ · CNBC · Economic&nbsp;Times · Moneycontrol ·
+              Mint · Business Standard · Financial Express · The Hindu · TechCrunch ·
+              Forbes · Inc42 · YourStory · Wikipedia ·
+              registry mirrors (Tofler, ZaubaCorp, TheCompanyCheck, IndiaFilings,
+              InstaFinancials, Falcon&nbsp;eBiz) · <b>LinkedIn</b> · <b>Y&nbsp;Combinator</b> ·
+              GitHub&nbsp;API · OpenCorporates · GrowthList</td></tr>
+      <tr><td class="t">Tier&nbsp;3<br><span class="badge unverified">2 sources</span></td>
+          <td>PitchBook · Tracxn · Crunchbase · CB&nbsp;Insights · Owler · Clay ·
+              CommonRoom · ZoomInfo · Apollo · GetLatka</td></tr>
+      <tr><td class="t">Tier&nbsp;4<br><span class="badge unverified">4+ sources</span></td>
+          <td>Blogs · X/Twitter · Reddit · Instagram · Facebook · YouTube ·
+              unknown domains</td></tr>
+      <tr><td class="t">Conflict</td>
+          <td><span class="badge conflicted">manual review</span> — good sources disagree, a human decides</td></tr>
+    </table>
+  </div>
+  <div class="connect"></div>
+
+  <div class="stage">
+    <div class="step">Step 5 · Store</div>
+    <h3>Store in the database</h3>
+    <p>Each fact is stored with its source URL, confidence, and version history — append-only,
+    so old values are kept, not overwritten. Raw documents go to object storage and get
+    indexed for search.</p>
+  </div>
+  <div class="connect"></div>
+
+  <div class="stage">
+    <div class="step">Step 5b · Discover &nbsp;<span class="tag">the schema grows from evidence</span></div>
+    <h3>Find fields the form doesn't have yet</h3>
+    <p>An analysis agent re-reads everything collected and proposes <b>new columns</b> the
+    103-field form is missing — each with a rationale, an observed example and a source.
+    Proposals that recur across companies (or score high confidence) are promoted into the
+    real schema, and because the extractor reads its field list from the database at run
+    time, <b>the next pass fills the new columns for every company automatically</b>.
+    See <a href="/discoveries">Discoveries</a>.</p>
+  </div>
+  <div class="connect"></div>
+
+  <div class="stage">
+    <div class="step">Step 6 · Serve</div>
+    <h3>How the team uses it</h3>
+    <div class="split">
+      <div class="lane">
+        <h4>💬 Telegram agent (2-way)</h4>
+        <ol>
+          <li>Analyst messages the bot (sandboxed OpenClaw agent, allowlisted IDs only)</li>
+          <li><b>Asking?</b> → agent reads the database over a read-only API → replies with facts <b>+ citations</b></li>
+          <li><b>Filing a founder call?</b> → agent drops the raw transcript into an inbox (its only write)</li>
+          <li>The trusted pipeline extracts it → confidential fields (revenue, cap table, ESOP) appear — never scraped</li>
+        </ol>
+      </div>
+      <div class="lane">
+        <h4>🖥 Dashboard &amp; Search</h4>
+        <ol>
+          <li><b>Company profile = verified facts only</b>; unverified + conflicted live on a
+              separate <b>Needs review</b> tab for that company</li>
+          <li>Conflict queue — keep / reject in one click</li>
+          <li>Extraction trace — every field's journey (Companies → trace view)</li>
+          <li>Discoveries — proposed new columns beyond the 103</li>
+          <li>Semantic search — plain-language, across every document</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel pad" style="border-left:4px solid var(--green)">
+  <b>Core rule:</b> workers collect · the model parses · the database validates ·
+  every fact has a source. The model is never the source of truth — the database is.
+</div>
+{% endblock %}

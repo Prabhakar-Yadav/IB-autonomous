@@ -1,0 +1,184 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 3395 >>
+stream
+BT
+/F2 18 Tf 54 736 Td (NemoClaw Project Delivery Report) Tj
+/F1 10 Tf 54 710 Td () Tj
+/F1 10 Tf 54 696 Td (Date: 2026-10-08) Tj
+/F1 10 Tf 54 682 Td () Tj
+/F1 10 Tf 54 668 Td (Repository target: https://github.com/vaultstack-ai/ib-autonomous-investment-prabhakar) Tj
+/F1 10 Tf 54 654 Td () Tj
+/F2 13 Tf 54 640 Td (Executive Summary) Tj
+/F1 10 Tf 54 618 Td () Tj
+/F1 10 Tf 54 604 Td (The NemoClaw project has been packaged as a GitHub-ready repository for an AI-native) Tj
+/F1 10 Tf 54 590 Td (investment-banking diligence intelligence platform. It includes the phase-based source) Tj
+/F1 10 Tf 54 576 Td (code, Docker execution setup, schemas, workers, dashboard, analysis agents, on-prem RAG) Tj
+/F1 10 Tf 54 562 Td (extension, scripts, model-comparison artifacts, and project handoff documentation.) Tj
+/F1 10 Tf 54 548 Td () Tj
+/F1 10 Tf 54 534 Td (Real environment files are intentionally excluded. Docker remains the) Tj
+/F1 10 Tf 54 520 Td (execution/orchestration layer for local services and workers, while the GitHub) Tj
+/F1 10 Tf 54 506 Td (repository stores the source and reproducible configuration.) Tj
+/F1 10 Tf 54 492 Td () Tj
+/F2 13 Tf 54 478 Td (What Has Been Done) Tj
+/F1 10 Tf 54 456 Td () Tj
+/F1 10 Tf 54 442 Td (- Built the data layer with Postgres/pgvector, MinIO raw-document storage, SearXNG) Tj
+/F1 10 Tf 54 428 Td (  metasearch, PostgREST, schema SQL, and a 103-field company schema.) Tj
+/F1 10 Tf 54 414 Td (- Implemented company crawling, document cataloging, extraction, source validation,) Tj
+/F1 10 Tf 54 400 Td (  fact versioning, confidence tracking, and provenance storage.) Tj
+/F1 10 Tf 54 386 Td (- Added collection workers for news, GitHub, LinkedIn-style public snippets, registry) Tj
+/F1 10 Tf 54 372 Td (  sources, patents, and targeted gap filling.) Tj
+/F1 10 Tf 54 358 Td (- Added a scheduler for autonomous recurring collection, extraction, transcript intake,) Tj
+/F1 10 Tf 54 344 Td (  semantic indexing, and analysis cycles.) Tj
+/F1 10 Tf 54 330 Td (- Built analyst-facing surfaces: agent DB access, transcript intake, and a FastAPI) Tj
+/F1 10 Tf 54 316 Td (  dashboard with company profiles, search, conflicts, discoveries, pipeline health, and) Tj
+/F1 10 Tf 54 302 Td (  review pages.) Tj
+/F1 10 Tf 54 288 Td (- Added semantic search using pgvector and NVIDIA embeddings.) Tj
+/F1 10 Tf 54 274 Td (- Added schema-discovery analysis that proposes new fields without automatically) Tj
+/F1 10 Tf 54 260 Td (  mutating the canonical schema.) Tj
+/F1 10 Tf 54 246 Td (- Added a privacy-preserving on-prem RAG extension for confidential files using local) Tj
+/F1 10 Tf 54 232 Td (  parsing, embeddings, and Ollama-compatible inference.) Tj
+/F1 10 Tf 54 218 Td (- Captured model-comparison scripts and outputs for hosted large-model extraction) Tj
+/F1 10 Tf 54 204 Td (  versus smaller/on-prem-friendly model paths.) Tj
+/F1 10 Tf 54 190 Td (- Added root repository packaging: `README.md`, `.env.example`, stronger `.gitignore`,) Tj
+/F1 10 Tf 54 176 Td (  `.dockerignore`, and this delivery report.) Tj
+/F1 10 Tf 54 162 Td () Tj
+/F2 13 Tf 54 148 Td (Docker Scope) Tj
+/F1 10 Tf 54 126 Td () Tj
+/F1 10 Tf 54 112 Td (Docker is used for execution, not as a replacement for source control. The Docker setup) Tj
+/F1 10 Tf 54 98 Td (includes:) Tj
+/F1 10 Tf 54 84 Td () Tj
+/F1 10 Tf 54 70 Td (- Postgres/pgvector for canonical facts and semantic index tables.) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 9 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 2887 >>
+stream
+BT
+/F1 10 Tf 54 736 Td (- MinIO for raw document storage.) Tj
+/F1 10 Tf 54 722 Td (- SearXNG for local metasearch.) Tj
+/F1 10 Tf 54 708 Td (- PostgREST for read-only agent access.) Tj
+/F1 10 Tf 54 694 Td (- Worker containers for crawling, extraction, verification, and collection jobs.) Tj
+/F1 10 Tf 54 680 Td (- Scheduler container for recurring autonomous runs.) Tj
+/F1 10 Tf 54 666 Td (- Dashboard container for the analyst UI.) Tj
+/F1 10 Tf 54 652 Td (- Analysis container for schema discovery.) Tj
+/F1 10 Tf 54 638 Td (- Separate compose setup for on-prem RAG.) Tj
+/F1 10 Tf 54 624 Td () Tj
+/F1 10 Tf 54 610 Td (The main Docker entry point is phase1-data-layer/db/docker-compose.yml. The on-prem RAG) Tj
+/F1 10 Tf 54 596 Td (entry point is phase7-onprem-rag/docker-compose.yml.) Tj
+/F1 10 Tf 54 582 Td () Tj
+/F2 13 Tf 54 568 Td (Repository Hygiene) Tj
+/F1 10 Tf 54 546 Td () Tj
+/F1 10 Tf 54 532 Td (The following files are excluded from GitHub:) Tj
+/F1 10 Tf 54 518 Td () Tj
+/F1 10 Tf 54 504 Td (- `.env`) Tj
+/F1 10 Tf 54 490 Td (- `**/.env`) Tj
+/F1 10 Tf 54 476 Td (- `.env.*`) Tj
+/F1 10 Tf 54 462 Td (- `**/.env.*`) Tj
+/F1 10 Tf 54 448 Td (- Python caches and local virtual environments.) Tj
+/F1 10 Tf 54 434 Td (- Accidental local database files and bind-mounted runtime state.) Tj
+/F1 10 Tf 54 420 Td () Tj
+/F1 10 Tf 54 406 Td (The repository keeps .env.example files so another developer can recreate local) Tj
+/F1 10 Tf 54 392 Td (configuration without exposing credentials.) Tj
+/F1 10 Tf 54 378 Td () Tj
+/F2 13 Tf 54 364 Td (Current Status) Tj
+/F1 10 Tf 54 342 Td () Tj
+/F1 10 Tf 54 328 Td (The system is feature-complete for a local end-to-end diligence intelligence prototype:) Tj
+/F1 10 Tf 54 314 Td () Tj
+/F1 10 Tf 54 300 Td (- Data collection is implemented.) Tj
+/F1 10 Tf 54 286 Td (- Extraction and verification are implemented.) Tj
+/F1 10 Tf 54 272 Td (- Provenance and versioning are implemented.) Tj
+/F1 10 Tf 54 258 Td (- Analyst dashboard and review flows are implemented.) Tj
+/F1 10 Tf 54 244 Td (- Semantic search is implemented.) Tj
+/F1 10 Tf 54 230 Td (- Schema discovery is implemented.) Tj
+/F1 10 Tf 54 216 Td (- On-prem/private-data RAG path is implemented.) Tj
+/F1 10 Tf 54 202 Td (- Model-comparison tooling is present.) Tj
+/F1 10 Tf 54 188 Td () Tj
+/F1 10 Tf 54 174 Td (Known handoff result: on the Sequretek comparison, hosted Nemotron-3-Ultra-550B filled) Tj
+/F1 10 Tf 54 160 Td (more of the 103-field schema than Nemotron-Nano-9B on the same collected document set,) Tj
+/F1 10 Tf 54 146 Td (and additional targeted gap-fill rounds increased coverage further.) Tj
+/F1 10 Tf 54 132 Td () Tj
+/F2 13 Tf 54 118 Td (Risks And Open Items) Tj
+/F1 10 Tf 54 96 Td () Tj
+/F1 10 Tf 54 82 Td (- Real `.env` values must be recreated locally after clone.) Tj
+/F1 10 Tf 54 68 Td (- The Docker stack should be smoke-tested after push using the target machine's) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 9 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 2219 >>
+stream
+BT
+/F1 10 Tf 54 736 Td (  WSL/Docker environment.) Tj
+/F1 10 Tf 54 722 Td (- The final Nano-9B versus Ultra-550B fair comparison should be completed and) Tj
+/F1 10 Tf 54 708 Td (  summarized.) Tj
+/F1 10 Tf 54 694 Td (- Some public-source fields will remain empty because they require founder transcripts,) Tj
+/F1 10 Tf 54 680 Td (  confidential files, or internal financial/cap-table data.) Tj
+/F1 10 Tf 54 666 Td (- Production deployment still needs formal secret management, backups, monitoring, auth) Tj
+/F1 10 Tf 54 652 Td (  hardening, and CI.) Tj
+/F1 10 Tf 54 638 Td (- Existing model-comparison logs may include noisy search results and should be treated) Tj
+/F1 10 Tf 54 624 Td (  as research artifacts rather than polished product output.) Tj
+/F1 10 Tf 54 610 Td () Tj
+/F2 13 Tf 54 596 Td (Recommended Next Steps) Tj
+/F1 10 Tf 54 574 Td () Tj
+/F1 10 Tf 54 560 Td (1. Push the prepared repository to GitHub.) Tj
+/F1 10 Tf 54 546 Td (2. Clone it fresh on a clean machine or folder.) Tj
+/F1 10 Tf 54 532 Td (3. Create local `.env` from `.env.example`.) Tj
+/F1 10 Tf 54 518 Td (4. Run `docker compose config` from `phase1-data-layer/db`.) Tj
+/F1 10 Tf 54 504 Td (5. Start `postgres`, `minio`, `searxng`, `postgrest`, and `dashboard`.) Tj
+/F1 10 Tf 54 490 Td (6. Run one company through collect and extract.) Tj
+/F1 10 Tf 54 476 Td (7. Verify dashboard pages, conflict queue, discoveries, and semantic search.) Tj
+/F1 10 Tf 54 462 Td (8. Finish the model decision: hosted 550B, API-based smaller model, or on-prem model.) Tj
+/F1 10 Tf 54 448 Td (9. Add CI checks for Python syntax, compose validation, schema loading, and extraction) Tj
+/F1 10 Tf 54 434 Td (   parser behavior.) Tj
+/F1 10 Tf 54 420 Td (10. Add an operational runbook for backups, restore, key rotation, and private-data) Tj
+/F1 10 Tf 54 406 Td (   handling.) Tj
+/F1 10 Tf 54 392 Td () Tj
+/F2 13 Tf 54 378 Td (Final Packaging Outcome) Tj
+/F1 10 Tf 54 356 Td () Tj
+/F1 10 Tf 54 342 Td (The project is ready to be committed and pushed with code, Docker configuration,) Tj
+/F1 10 Tf 54 328 Td (documentation, reference assets, reports, and execution scripts. Environment files and) Tj
+/F1 10 Tf 54 314 Td (local runtime secrets are not included.) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 9 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R] /Count 3 >>
+endobj
+10 0 obj
+<< /Type /Catalog /Pages 9 0 R >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000154 00000 n 
+0000003601 00000 n 
+0000003737 00000 n 
+0000006676 00000 n 
+0000006812 00000 n 
+0000009083 00000 n 
+0000009219 00000 n 
+0000009288 00000 n 
+trailer
+<< /Size 11 /Root 10 0 R >>
+startxref
+9338
+%%EOF

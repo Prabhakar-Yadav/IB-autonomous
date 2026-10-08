@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Pipeline — PE Intelligence{% endblock %}
+{% block content %}
+<h1>Pipeline health</h1>
+
+<div class="statrow">
+  {% for d in doc_stats %}
+  <div class="stat"><div class="v num">{{ d.n }}</div><div class="l">documents {{ d.status }}</div></div>
+  {% endfor %}
+  {% for i in inbox_stats %}
+  <div class="stat"><div class="v num">{{ i.n }}</div><div class="l">transcripts {{ i.status }}</div></div>
+  {% endfor %}
+</div>
+
+<h2>Recent worker runs</h2>
+<div class="panel overflow">
+<table>
+  <tr><th>Worker</th><th>Company</th><th>Started</th><th>Status</th><th>Stats</th></tr>
+  {% for r in runs %}
+  <tr>
+    <td>{{ r.worker_id }}</td>
+    <td>{{ r.slug or '—' }}</td>
+    <td class="dim">{{ r.started_at.strftime('%Y-%m-%d %H:%M') }}</td>
+    <td><span class="badge {{ 'verified' if r.status == 'succeeded' else 'conflicted' }}">{{ r.status }}</span></td>
+    <td class="src">{{ r.stats }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}

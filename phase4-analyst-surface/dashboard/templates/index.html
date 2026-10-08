@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Companies — PE Intelligence{% endblock %}
+{% block content %}
+<h1>Tracked companies</h1>
+
+<div class="statrow">
+  <div class="stat"><div class="v num">{{ companies|length }}</div><div class="l">companies</div></div>
+  <div class="stat"><div class="v num">{{ stats.total }}</div><div class="l">current facts</div></div>
+  <div class="stat good"><div class="v num">{{ stats.verified }}</div><div class="l">✓ verified</div></div>
+  <div class="stat {{ 'crit' if stats.conflicts else 'good' }}"><div class="v num">{{ stats.conflicts }}</div><div class="l">
+    <a href="/conflicts">⚠ conflicts to review</a></div></div>
+</div>
+
+<div class="panel overflow">
+<table>
+  <tr><th>Company</th><th>Completeness</th><th></th><th>Verified</th><th>Conflicted</th><th>Last fact</th></tr>
+  {% for c in companies %}
+  <tr>
+    <td><a href="/company/{{ c.slug }}"><strong>{{ c.display_name }}</strong></a>
+        {% if c.website %}<div class="src">{{ c.website }}</div>{% endif %}</td>
+    <td><div class="bar"><div style="width:{{ c.completeness_pct }}%"></div></div></td>
+    <td class="num">{{ c.completeness_pct }}% <span class="dim">({{ c.fields_filled }}/{{ c.fields_total }})</span></td>
+    <td class="num" style="color:var(--green)">{{ c.verified }}</td>
+    <td class="num" style="color:var(--amber)">{{ c.conflicted }}</td>
+    <td class="dim">{{ c.last_fact_at.strftime('%Y-%m-%d %H:%M') if c.last_fact_at else '—' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+<p class="dim">Add a company: run the company worker once for it — the scheduler takes over from there.</p>
+{% endblock %}

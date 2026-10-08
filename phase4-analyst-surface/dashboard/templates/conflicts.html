@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Conflict queue — PE Intelligence{% endblock %}
+{% block content %}
+<h1>Conflict review queue <span class="dim">({{ items|length }})</span></h1>
+<p class="dim">Sources disagreed on these facts. <strong>Keep</strong> marks the current value verified;
+<strong>Reject</strong> retires it and restores the previous value (full history is preserved either way).</p>
+
+{% if not items %}<div class="panel pad">🎉 Queue is empty — nothing to review.</div>{% endif %}
+
+{% for it in items %}
+<div class="panel pad">
+  <div class="dim" style="margin-bottom:.3rem">
+    <a href="/company/{{ it.slug }}"><strong>{{ it.display_name }}</strong></a> · {{ it.section_title }} · <strong style="color:var(--text)">{{ it.label }}</strong>
+  </div>
+  <table>
+    <tr>
+      <th style="width:12%">Current</th>
+      <td>{{ it.value_text }}</td>
+      <td class="num" style="width:8%">{{ '%.2f'|format(it.confidence) }}</td>
+      <td class="src" style="width:28%">{% if it.source_url and it.source_url.startswith('http') %}<a href="{{ it.source_url }}" target="_blank">{{ it.source_url|truncate(55) }}</a>{% else %}{{ it.source_url }}{% endif %}</td>
+    </tr>
+    <tr>
+      <th>Previous</th>
+      <td class="dim">{{ it.prev_value or '— (none: rejecting empties the field)' }}</td>
+      <td class="num dim">{{ '%.2f'|format(it.prev_confidence) if it.prev_confidence else '' }}</td>
+      <td class="src">{% if it.prev_source and it.prev_source.startswith('http') %}<a href="{{ it.prev_source }}" target="_blank">{{ it.prev_source|truncate(55) }}</a>{% else %}{{ it.prev_source or '' }}{% endif %}</td>
+    </tr>
+  </table>
+  <div style="margin-top:.6rem; display:flex; gap:.6rem;">
+    <form method="post" action="/conflicts/{{ it.id }}/keep"><button class="keep">✓ Keep current (verify)</button></form>
+    <form method="post" action="/conflicts/{{ it.id }}/reject"><button class="reject">✗ Reject (restore previous)</button></form>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

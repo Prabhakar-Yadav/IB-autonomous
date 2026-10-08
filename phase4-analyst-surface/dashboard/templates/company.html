@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ company.display_name }} — PE Intelligence{% endblock %}
+{% block content %}
+<h1>{{ company.display_name }}
+  {% if company.website %}<span class="dim" style="font-size:.9rem"> · <a href="{{ company.website }}" target="_blank">{{ company.website }}</a></span>{% endif %}
+  <span style="font-size:.85rem; margin-left:.8rem"><a href="/trace/{{ company.slug }}">extraction trace →</a></span>
+</h1>
+<p class="sub">Showing <b>verified facts only</b>.
+  <a href="/company/{{ company.slug }}/review">Needs review →</a>
+  <span class="badge conflicted">{{ review.conflicted }} conflicted</span>
+  <span class="badge unverified">{{ review.unverified }} unverified</span>
+</p>
+
+<div class="statrow">
+  <div class="stat"><div class="v num">{{ completeness.completeness_pct }}%</div>
+    <div class="l">complete ({{ completeness.fields_filled }}/{{ completeness.fields_total }} fields)</div></div>
+</div>
+
+{% for code, sec in sections %}
+<h2>{{ code }} · {{ sec.title }}</h2>
+<div class="panel overflow">
+<table>
+  <tr><th style="width:26%">Field</th><th>Value</th><th>Status</th><th>Conf.</th><th style="width:24%">Source</th></tr>
+  {% for f in sec.facts %}
+  <tr>
+    <td>{{ f.label }}{% if f.founder_only %} <span class="badge founder">founder-only</span>{% endif %}</td>
+    <td>{{ f.value_text }}</td>
+    <td><span class="badge {{ f.status }}">{{ f.status }}</span></td>
+    <td class="num">{{ '%.2f'|format(f.confidence) }}</td>
+    <td class="src">
+      {% if f.source_url and f.source_url.startswith('http') %}<a href="{{ f.source_url }}" target="_blank">{{ f.source_url|truncate(60) }}</a>
+      {% else %}{{ f.source_url or f.source_type }}{% endif %}
+      <div>v{{ f.version }} · {{ f.collected_by }} · {{ f.created_at.strftime('%Y-%m-%d') }}</div>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endfor %}
+
+<h2 style="color:var(--amber)">Gaps — the "ask the founder" list ({{ gaps|map(attribute='1.fields')|map('length')|sum }} fields)</h2>
+<p class="dim">Empty fields, grouped by section. Founder-only ones can enter ONLY via transcripts/documents — this is the prep sheet for the next call.</p>
+{% for code, g in gaps %}
+<div class="panel pad">
+  <strong class="dim">{{ code }} · {{ g.title }}</strong>
+  <div style="margin-top:.4rem; display:flex; flex-wrap:wrap; gap:.4rem;">
+    {% for f in g.fields %}
+      <span class="badge {{ 'founder' if f.founder_only else 'unverified' }}">{{ f.label|truncate(48) }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

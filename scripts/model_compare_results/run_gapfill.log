@@ -1,0 +1,39 @@
+===== GAP-FILL PASS — Sequretek — Thu Aug 13 22:33:19 UTC 2026 =====
+=== waiting for Stage B (nano-9b-v2) to finish first ===
+===== GAP-FILL PASS — Sequretek — Fri Aug 14 07:17:09 UTC 2026 =====
+=== waiting for Stage B (nano-9b-v2) to finish first ===
+===== GAP-FILL PASS — Sequretek — Fri Aug 14 07:17:09 UTC 2026 =====
+=== waiting for Stage B (nano-9b-v2) to finish first ===
+===== GAP-FILL PASS — Sequretek — Fri Aug 14 09:51:18 UTC 2026 =====
+=== waiting for Stage B (nano-9b-v2) to finish first ===
+Both stages confirmed done — comparing scores
+Ultra-550B: 40.8%   nano-9b-v2: 33.0%
+Winner: Nemotron-3-Ultra-550B — will gap-fill + finalize profile with this model
+=== gap-filler: fetch documents targeted at still-empty fields ===
+ Container nemoclaw-minio Running 
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-platform-news-worker-run-0b0fb978757c Creating 
+ Container nemoclaw-platform-news-worker-run-0b0fb978757c Created 
+
+=== extract newly-fetched gap-fill documents with Nemotron-3-Ultra-550B ===
+  drain 1: 23 queued 09:52:36
+ Container nemoclaw-postgres Running 
+ Container nemoclaw-minio Running 
+ Container nemoclaw-dashboard Running 
+ Container nemoclaw-searxng Running 
+ Container nemoclaw-minio Waiting 
+ Container nemoclaw-postgres Waiting 
+ Container nemoclaw-minio Healthy 
+ Container nemoclaw-postgres Healthy 
+ Container nemoclaw-platform-worker-run-32aebf5d0e4b Creating 
+ Container nemoclaw-platform-worker-run-32aebf5d0e4b Created 
+processing 23 document(s) with model nvidia/nemotron-3-ultra-550b-a55b
+  [1/23] reading https://www.linkedin.com/posts/lawdocsservices_rbi-nbfc-cybersecurity- ...
+      chunk 1 → model...
+      chunk 2 → model...

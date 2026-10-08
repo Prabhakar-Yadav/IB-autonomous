@@ -1,0 +1,15 @@
+preset:
+  name: pe-company-db
+  description: "Read-only access to the platform's PostgREST API (canonical company facts)"
+network_policies:
+  pe_company_db:
+    endpoints:
+      - host: host.docker.internal
+        port: 3005
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: "/**" }
+          - allow: { method: POST, path: "/transcript_inbox" }
+    binaries:
+      - { path: /usr/bin/curl }

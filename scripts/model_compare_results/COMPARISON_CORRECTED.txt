@@ -1,0 +1,4 @@
+===== CORRECTED FINAL COMPARISON — Sequretek (full 186 documents, both stages) =====
+Nemotron-3-Ultra-550B (hosted) : 42/103 fields  (40.8%)
+nemotron-nano-9b-v2 (hosted)   : NANO_9B filled=0 pct=0.0
+Total redo time: 282 min

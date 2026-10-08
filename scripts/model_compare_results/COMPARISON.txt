@@ -1,0 +1,5 @@
+===== COMPARISON — Sequretek =====
+Documents used (identical for both): 186
+Hosted Nemotron-3-Ultra-550B : 0/103 fields  (0.0%)
+Local  Nemotron-Nano-9B      : 0/103 fields  (0.0%)
+Total time: 364 min

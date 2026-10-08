@@ -1,0 +1,4 @@
+===== FINAL COMPARISON (API-only) — Sequretek (186 identical documents) =====
+Nemotron-3-Ultra-550B (hosted) : 24/103 fields  (23.3%)
+nemotron-nano-9b-v2 (hosted)   : 0/103 fields  (0.0%)
+Total time: 194 min

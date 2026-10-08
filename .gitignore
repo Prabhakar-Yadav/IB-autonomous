@@ -1,0 +1,31 @@
+# Secrets - never commit, anywhere in this project.
+.env
+**/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Local Python/runtime artifacts.
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Local OS/editor files.
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local Docker/database state. Compose named volumes are not stored here, but
+# these patterns keep accidental bind-mounted data out of GitHub.
+pgdata/
+miniodata/
+*.db
+*.sqlite
+*.sqlite3

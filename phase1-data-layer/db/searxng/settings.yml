@@ -1,0 +1,30 @@
+# SearXNG config for the NemoClaw platform.
+# JSON API enabled so workers can query it; only reachable inside the docker network.
+use_default_settings: true
+
+server:
+  secret_key: "nemoclaw-local-searxng-key-change-if-exposed"
+  limiter: false            # no rate limiting for our own workers
+  image_proxy: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "en"
+  formats:
+    - html
+    - json                  # <- required for the API
+
+engines:
+  - name: google
+    disabled: false
+  - name: duckduckgo
+    disabled: false
+  - name: bing
+    disabled: false
+  - name: startpage
+    disabled: false
+  - name: qwant
+    disabled: false
+  - name: wikipedia
+    disabled: false

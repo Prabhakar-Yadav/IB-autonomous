@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Extraction trace · {{ company.display_name }} — PE Intelligence{% endblock %}
+{% block content %}
+<style>
+  .jfield{border-bottom:1px solid var(--hair2);padding:.7rem 0}
+  .jfield:last-child{border-bottom:none}
+  .jhead{font-weight:650;font-size:.95rem;margin-bottom:.15rem}
+  .jval{color:var(--ink-2);font-size:.9rem;margin-bottom:.45rem}
+  .journey{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;font-size:.8rem}
+  .node{background:var(--paper);border:1px solid var(--hair);border-radius:6px;padding:.2rem .55rem;color:var(--ink-2)}
+  .node b{color:var(--ink)}
+  .node.src a{color:var(--navy-bright)}
+  .node.ok{border-color:var(--green);color:var(--green)}
+  .node.warn{border-color:var(--amber);color:var(--amber)}
+  .sep{color:var(--ink-3);font-weight:700}
+  .jempty{color:var(--ink-3);font-size:.88rem;padding:.35rem 0;border-bottom:1px solid var(--hair2)}
+  .secsum{font-size:.78rem;color:var(--ink-3);font-weight:600}
+  details.older{margin-top:.4rem}
+  details.older summary{font-size:.78rem;color:var(--ink-3);cursor:pointer}
+  details.older table{margin-top:.4rem;font-size:.8rem}
+</style>
+
+<h1>Extraction trace — {{ company.display_name }}</h1>
+<p class="sub">The journey of every field: which worker collected the evidence, from which link,
+how the model extracted it, and how it was validated. <a href="/company/{{ company.slug }}">← profile</a>
+· <a href="/how">how the pipeline works →</a></p>
+
+<div class="statrow">
+  <div class="stat"><div class="v num">{{ stats.filled }}<span class="dim" style="font-size:1rem">/{{ total }}</span></div><div class="l">fields filled</div></div>
+  <div class="stat good"><div class="v num">{{ stats.verified }}</div><div class="l">✓ verified · 2+ sources</div></div>
+  <div class="stat warn"><div class="v num">{{ stats.conflicted }}</div><div class="l">⚠ conflicted</div></div>
+  <div class="stat"><div class="v num">{{ stats.founder_gap }}</div><div class="l">🔒 awaiting founder</div></div>
+</div>
+
+{% set roles = {
+  'company-website-worker': 'Crawls the company\'s own website — pages, PDFs, press',
+  'news-worker': 'Business press: funding, valuations, lawsuits, revenue',
+  'registry-worker': 'MCA registry mirrors: CIN, incorporation, directors, capital',
+  'patents-worker': 'Google Patents + Indian Patent Office',
+  'github-worker': 'Official GitHub API — repos, languages, tech stack',
+  'linkedin-worker': 'Headcount & hiring from public search (no scraping)',
+  'gap-filler-worker': 'Targets each empty field with a specific search',
+  'telegram-intake': 'Founder-call transcripts filed via Telegram (confidential)'
+} %}
+<h2>Who collected what</h2>
+<div class="panel pad overflow">
+  <table>
+    <tr><th style="width:20%">Worker</th><th>What it does</th><th>Documents</th><th style="width:8%" class="num">Docs</th></tr>
+    {% for w in workers %}
+    <tr><td><b>{{ w.collected_by }}</b></td>
+        <td class="dim" style="font-size:.85rem">{{ roles.get(w.collected_by, '—') }}</td>
+        <td><div class="bar" style="max-width:280px"><div style="width:{{ (100*w.docs/max_docs)|round }}%"></div></div></td>
+        <td class="num">{{ w.docs }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% for sec in sections %}
+{% set filled = sec.fields|selectattr('current')|list|length %}
+<h2>{{ sec.code }} · {{ sec.title }} <span class="secsum">— {{ filled }}/{{ sec.fields|length }} filled</span></h2>
+<div class="panel pad">
+  {% for f in sec.fields %}
+  {% if f.current %}
+  <div class="jfield">
+    <div class="jhead">{{ f.meta.label }}
+      {% if f.meta.founder_only %}<span class="badge founder">founder-only</span>{% endif %}</div>
+    <div class="jval">{{ f.current.value_text|truncate(160) }}</div>
+    <div class="journey">
+      <span class="node"><b>{{ f.current.doc_worker or f.current.collected_by or 'worker' }}</b><br><span class="dim" style="font-size:.72rem">collected</span></span>
+      <span class="sep">→</span>
+      <span class="node src">{% if f.current.source_url and f.current.source_url.startswith('http') %}<a href="{{ f.current.source_url }}" target="_blank">{{ f.current.source_url|truncate(38) }}</a>{% else %}{{ f.current.source_url or f.current.source_type }}{% endif %}<br><span class="dim" style="font-size:.72rem">source</span></span>
+      <span class="sep">→</span>
+      <span class="node"><b>Nemotron</b> · conf {{ '%.2f'|format(f.current.confidence) }}<br><span class="dim" style="font-size:.72rem">extracted</span></span>
+      <span class="sep">→</span>
+      {% if f.current.status == 'verified' %}
+        <span class="node ok">✓ verified<br><span style="font-size:.72rem">{{ f.current.verified_by or 'cross-validator' }}</span></span>
+      {% elif f.current.status == 'conflicted' %}
+        <span class="node warn">⚠ conflicted<br><span style="font-size:.72rem">needs review</span></span>
+      {% else %}
+        <span class="node">○ single source<br><span class="dim" style="font-size:.72rem">unverified</span></span>
+      {% endif %}
+    </div>
+    {% if f.versions|length > 1 %}
+    <details class="older">
+      <summary>{{ f.versions|length - 1 }} earlier version(s) — full history</summary>
+      <table>
+        <tr><th>v</th><th>Value</th><th>Via</th><th>Source</th><th>Status</th><th>When</th></tr>
+        {% for v in f.versions %}
+        <tr {% if not v.is_current %}style="opacity:.6"{% endif %}>
+          <td class="num">{{ v.version }}{% if v.is_current %} ●{% endif %}</td>
+          <td>{{ v.value_text|truncate(70) }}</td>
+          <td>{{ v.doc_worker or v.collected_by }}</td>
+          <td class="src">{{ (v.source_url or v.source_type)|truncate(34) }}</td>
+          <td><span class="badge {{ v.status }}">{{ v.status }}</span></td>
+          <td class="dim">{{ v.created_at.strftime('%d %b') }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </details>
+    {% endif %}
+  </div>
+  {% else %}
+  <div class="jempty">{{ f.meta.label }} —
+    {% if f.meta.founder_only %}🔒 enters via a founder call transcript{% else %}not found in public sources yet{% endif %}
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

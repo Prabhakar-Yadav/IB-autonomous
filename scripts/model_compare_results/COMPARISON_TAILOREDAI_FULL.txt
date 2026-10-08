@@ -1,0 +1,5 @@
+===== TAILORED AI — FULL MODEL COMPARISON =====
+LFM2.5-230M (Liquid AI, extraction-specialized) : 0/103 fields  (0.0%)  — schema-compliance failure, see notes
+Qwen3.5-9B  (local, GPU box)                    : 46/103 fields  (44.7%)
+Qwen3.5-27B (local, GPU box)                    : 66/103 fields  (64.1%)
+Total time: 59 min
